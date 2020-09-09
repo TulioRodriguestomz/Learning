@@ -1,10 +1,10 @@
-/* Conta_Corrente v0.2
-***Atualizações v0.2***
+/* Código atualizado para a versão 0.2.1
 ►Criada a Classe Cliente
 ►Agora a Classe ContaCorrente se chama Conta, e ela está vínculada 
 a Classe Cliente.
 ►Bugs CONDICIONAIS adicionados aos métodos SACAR e DEPOSITAR
-►Adicionado a classe Conta a DATA DE CRIAÇÃO da conta
+►Adicionado na classe Conta a DATA DE CRIAÇÃO da conta
+►Adicionado Lista de Contas em modo TABELA, agora aparece um em baixo do outro
 */
 import 'dart:io';
 import 'cliente.dart';
@@ -38,7 +38,9 @@ main() {
         break;
       case 2:
         print('--------------------------------------');
-        print(cadastros);
+        cadastros.forEach((key, value) {
+          print('$key $value\n');
+        });
         print('--------------------------------------');
         break;
       case 3:
@@ -65,11 +67,6 @@ main() {
         } else {
           print('Conta inválida');
         }
-        print('--------------------------------------');
-        break;
-      default:
-        print('--------------------------------------');
-        print('Opção inválida!');
         print('--------------------------------------');
         break;
     }
