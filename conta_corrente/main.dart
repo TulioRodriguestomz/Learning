@@ -1,64 +1,76 @@
+/* Conta_Corrente v0.2
+***Atualizações v0.2***
+►Criada a Classe Cliente
+►Agora a Classe ContaCorrente se chama Conta, e ela está vínculada 
+a Classe Cliente.
+►Bugs CONDICIONAIS adicionados aos métodos SACAR e DEPOSITAR
+►Adicionado a classe Conta a DATA DE CRIAÇÃO da conta
+*/
 import 'dart:io';
-import 'contaCorrente.dart';
+import 'cliente.dart';
+import 'conta.dart';
 
 main() {
-  Map<int, ContaCorrente> contas = {};
+  Map<int, Cliente> cadastros = {};
   var numeroConta = 0;
   var resposta;
-  var escolha;
-  while (escolha != 00) {
-    print('------------------------------------------');
-    //Painel de ESCOLHAS
-    print('-@ Conta_Corrente v0.1 @-');
-    print('-@ Escolha uma das opções abaixo @-');
-    print('NOVO CORRENTISTA[1]|LISTA CORRENTISTAS[2]');
-    print('DEPOSITAR[3]|SACAR[4]|FINALIZAR[00]');
-    print('------------------------------------------');
+  // var escolha;
+  while (resposta != 10) {
+    print('--------------------------------------');
+    print('--------        Opções        --------');
+    print('Adicionar conta[1] | Lista de Contas[2]');
+    print('DEPOSITAR[3] | SACAR[4] | Trocar Nome[5]');
+    print('             Finalizar[10]              ');
+    print('--------------------------------------');
     resposta = int.parse(stdin.readLineSync());
-    //
     switch (resposta) {
       case 1:
-        stdout.write('Nome CORRENTISTA: ');
+        print('--------------------------------------');
+        stdout.write('NOME: ');
         var nome = stdin.readLineSync();
-        stdout.write('Saldo (Opicional|Caso não quiser informar, digite 0): ');
+        stdout.write('SALDO(opcional) Caso não tiver, digite 0: ');
         var saldo = double.parse(stdin.readLineSync());
-        stdout.write('Deseja adicionar outro Correntista?[y=1|n=0] ');
+        stdout.write('Adicionar outra conta?[y=1,n=0]: ');
         resposta = int.parse(stdin.readLineSync());
-        contas[numeroConta++] = ContaCorrente(
-          nomeCorrentista: nome,
-          saldoCorrentista: saldo,
-        );
-        print('------------------------------------------');
+        cadastros[numeroConta++] =
+            Cliente(Conta(data, saldo: saldo), nomeCorrentista: nome);
+        print('--------------------------------------');
         break;
       case 2:
-        print(contas);
-        print('------------------------------------------');
+        print('--------------------------------------');
+        print(cadastros);
+        print('--------------------------------------');
         break;
       case 3:
+        print('--------------------------------------');
         stdout.write('Digite o NUMERO DA CONTA: ');
         var numeroConta = int.parse(stdin.readLineSync());
-        if (contas.containsKey(numeroConta) == false) {
-          print('Conta inválida.');
+        if (cadastros.containsKey(numeroConta)) {
+          stdout.write('Digite o Valor do DEPÓSITO: ');
+          var valorDeposito = double.parse(stdin.readLineSync());
+          cadastros[numeroConta].contaCorrentista.depositar(valorDeposito);
         } else {
-          stdout.write('Digite o valor do DEPOSITO: ');
-          var valorDeposito = int.parse(stdin.readLineSync());
-          contas[numeroConta].adicionarSaldo(deposito: valorDeposito);
+          print('Conta inválida!!');
         }
-        print('------------------------------------------');
+        print('--------------------------------------');
         break;
       case 4:
+        print('--------------------------------------');
         stdout.write('Digite o NUMERO DA CONTA: ');
         var numeroConta = int.parse(stdin.readLineSync());
-        if (contas.containsKey(numeroConta) == false) {
-          print('Conta inválida.');
+        if (cadastros.containsKey(numeroConta)) {
+          stdout.write('Digite o Valor do SAQUE: ');
+          var valorSaque = double.parse(stdin.readLineSync());
+          cadastros[numeroConta].contaCorrentista.sacar(valorSaque);
         } else {
-          stdout.write('Digite o valor do SAQUE: ');
-          var valorSaque = int.parse(stdin.readLineSync());
-          contas[numeroConta].sacar(saque: valorSaque);
+          print('Conta inválida');
         }
-        print('------------------------------------------');
+        print('--------------------------------------');
         break;
-      case 5:
+      default:
+        print('--------------------------------------');
+        print('Opção inválida!');
+        print('--------------------------------------');
         break;
     }
   }
